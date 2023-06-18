@@ -1,3 +1,24 @@
+--1
+CREATE OR REPLACE PROCEDURE array_date(
+  day_array IN SYS.ODCINUMBERLIST,
+  month_array IN SYS.ODCINUMBERLIST
+) IS
+  v_date DATE;
+BEGIN
+  FOR i IN 1..month_array.COUNT LOOP
+    FOR j IN 1..day_array.COUNT LOOP
+      v_date := TO_DATE(day_array(j) || '-' || month_array(i) || '-' || EXTRACT(YEAR FROM SYSDATE), 'DD-MM-YYYY');
+      DBMS_OUTPUT.PUT_LINE(TO_CHAR(v_date, 'Day') || ', ' || TO_CHAR(v_date, 'Month') || ' ' || TO_CHAR(v_date, 'DD, YYYY'));
+    END LOOP;
+  END LOOP;
+END;
+/
+
+BEGIN
+  array_date(ODCINUMBERLIST(1, 5, 7), ODCINUMBERLIST(2, 4));
+END;
+/
+
 --2
 Create or replace procedure name_fun as
     lname employees.last_name%type;
